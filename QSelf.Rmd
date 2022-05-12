@@ -1,0 +1,73 @@
+---
+title: "QSelf"
+author: "Christopher Nicholson"
+date: '2022-05-12'
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(countrycode)
+```
+
+## Abstract
+
+One of the most vital parts of ones health is their sleeping habits. Over the later part of the semester I asked my family to track their sleeping habits, to within fifteen minutes, to help me further understand if I was sleeping as normally as everyone else.
+
+```{r cars}
+sleep <- read_csv("QSelf.csv")
+
+mum <- sleep[2:15,7]
+dad <- sleep[2:20,14]
+me <- sleep[2:18,21]
+
+me <- unlist(me)
+me <- as.numeric(me)
+dad <- unlist(dad)
+dad <- as.numeric(dad)
+mum <- unlist(mum)
+mum <- as.numeric(mum)
+
+print("This is a summary of my sleep")
+summary(me)
+print("This is a summary of my father's sleep")
+summary(dad)
+print("This is a summary of my mother's sleep")
+summary(mum)
+```
+
+## Obtainig the data
+
+We were not very strict when it came to collecting the data. Just a pad and paper to keep track much like how one would keep a dream journal. We were consistent with our tracking since there were very few missing data points. The only times there may have been an inconsistency was during the night when we would frequently wake up to tend to the dogs or get a glass of water. If no time was shown then it was assumed that the person did not wake up in the middle of the night. A part from that we all had a time which we went to bed and another time where we woke up.
+
+```{r}
+total <- rbind(me, mum, dad)
+total <- t(total)
+boxplot(total, main = "Hours")
+```
+
+## Constraints and refinement
+
+There wasn't any prevalent issues when collecting or processing the data. People were mostly effective in collecting the data. As the study went on midterms and other major assignments cause my sleeping schedule to crash and consequently my accuracy in the note taking became erratic and fundamentally flawed. Though I can attest to having an average of fewer than six hours per night on average as the semester went on there was very little recorded of it due to high stress and lack of sleep.
+
+## Challenges
+
+The largest challenge in for this project was how to properly format my collected data to more easily and accurately pull the data to be processed. Most databases we've used throughout this semester were formatted in a way which allowed easy access, but as you can tell by my early mutations I've saved the data in a text format rather than a numerical format. Which meant that my first few functions didn't want to run. Understandable, I would also have trouble trying to add one and one instead of 1 + 1.
+
+```{r}
+total <- as.data.frame(total)
+summary(aov(me ~ mum, data = total))
+summary(aov(me ~ dad, data = total))
+```
+## General Results
+
+There does not seem to be any statistically significant difference between how much sleep I was getting and those I'm living with. As long as I'm not stressed I seem to sleep an appropriate amount of time. It would be interesting to do this research again since my father recently retired and I will be on summer vacation.
+
+## Expectations
+
+Its generally accepted that people should have eight hours of sleep a night. This small study has shown that one to two hours plus or minus is not that major. Additionally waking up in the night is probably habitual, may be genetic, but not a major concern in terms of total hours slept per night.
+
+## My Responce
+
+I constantly feel tired throughout the day and this has shown me that I should stop complaining since they're sleeping less than me. Another thing may be to wake up earlier in the morning despite being a night owl.
